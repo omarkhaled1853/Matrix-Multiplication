@@ -198,8 +198,32 @@ int main(){
     struct Matrix *b = malloc(sizeof(struct Matrix));
     read_matrix(a);
     read_matrix(b);
+    
+    struct timeval stop, start;
+
+    gettimeofday(&start, NULL); //start checking time for first method
     initialize_mult_per_matrix(a, b);
+    gettimeofday(&stop, NULL); //end checking time for first method
+
+    printf("First Methode:\n");
+    printf("Seconds taken %lu\n", stop.tv_sec - start.tv_sec);
+    printf("Microseconds taken: %lu\n", stop.tv_usec - start.tv_usec);
+
+    gettimeofday(&start, NULL); //start checking time for second method
     initialize_mult_per_row(a, b);
+    gettimeofday(&stop, NULL); //end checking time for second method
+
+    printf("Second Methode:\n");
+    printf("Seconds taken %lu\n", stop.tv_sec - start.tv_sec);
+    printf("Microseconds taken: %lu\n", stop.tv_usec - start.tv_usec);
+
+    gettimeofday(&start, NULL); //start checking time for third method
     initialize_mult_per_element(a, b);
+    gettimeofday(&stop, NULL); //end checking time for third method
+
+    printf("Third Methode:\n");
+    printf("Seconds taken %lu\n", stop.tv_sec - start.tv_sec);
+    printf("Microseconds taken: %lu\n", stop.tv_usec - start.tv_usec);
+
     return 0;
 }
