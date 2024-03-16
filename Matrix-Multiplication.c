@@ -59,14 +59,6 @@ int check_not_valid_mult(struct Matrix *a, struct Matrix *b){
         printf("Columns of first matrix must be equal to rows of second matrix\n");
         free_Matrix(a);
         free_Matrix(b);
-        // for (int i = 0; i < a->rows; i++)
-        //     free(a->arr[i]);
-        // free(a->arr);
-        // free(a);
-        // for (int i = 0; i < b->rows; i++)
-        //     free(b->arr[i]);
-        // free(b->arr);
-        // free(b);
         return 6;
     }
 }
@@ -195,13 +187,8 @@ int initialize_mult_per_matrix(struct Matrix *a, struct Matrix *b){
         perror("Faild joining thread\n");
         return 2;
     }
-    // print_matrix(c);
     write_matrix(0, c);
     free_Matrix(c);
-    // for (int i = 0; i < c->rows; i++)
-    //     free(c->arr[i]);
-    // free(c->arr);
-    // free(c);
 }
 
 // operation of multiplication per row
@@ -245,13 +232,8 @@ int initialize_mult_per_row(struct Matrix *a, struct Matrix *b){
             return 2;
         }
     }
-    // print_matrix(c);
     write_matrix(1, c);
     free_Matrix(c);
-    // for (int i = 0; i < c->rows; i++)
-    //     free(c->arr[i]);
-    // free(c->arr);
-    // free(c);
 }
 
 // operation of multiplication per element
