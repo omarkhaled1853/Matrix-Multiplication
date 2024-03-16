@@ -103,39 +103,92 @@ int read_matrix(const char name[], struct Matrix *matrix) {
     return 0;
 }
 
+// write output matrix based on each method
+void write_matrix(int type, struct Matrix *c) {
+    char filename[256];
+    strcpy(filename, output);
+    switch (type) {
+        case 0:
+            strcat(filename, "_per_matrix");
+            break;
+        case 1:
+            strcat(filename, "_per_row");
+            break;
+        case 2:
+            strcat(filename, "_per_element");
+            break;
+    }
+    strcat(filename, ".txt");
+    FILE *out = fopen(filename, "w");
+    switch (type) {
+        case 0:
+            fprintf(out, "Method: A thread per matrix\n");
+            break;
+        case 1:
+            fprintf(out, "Method: A thread per row\n");
+            break;
+        case 2:
+            fprintf(out, "Method: A thread per element\n");
+            break;
+    }
+    fprintf(out, "row=%d col=%d\n", c->rows, c->cols);
+    for (int i = 0; i < c->rows; i++) {
+        for (int j = 0; j < c->cols; j++) {
+            fprintf(out, "%d ", c->arr[i][j]);
+        }
+        fprintf(out, "\n");
+    }
+    fclose(out);
+}
+
 int main(int argc, char *argv[]) {
     
-    check_not_valid_arg(argc);
+    // check_not_valid_arg(argc);
 
-    struct Matrix *a = malloc(sizeof(struct Matrix));
-    struct Matrix *b = malloc(sizeof(struct Matrix));
+    // struct Matrix *a = malloc(sizeof(struct Matrix));
+    // struct Matrix *b = malloc(sizeof(struct Matrix));
 
-    // No arguments
-    if(argv[1] == NULL){
-        if(read_matrix("a", a) == -1){
-            return 2;
-        }
-        if(read_matrix("b", b) == -1){
-            return 3;
-        }
-        output = "c";
-    }
-    // Custom arrguments
-    else {
-        if(read_matrix(argv[1], a) == -1){
-            return 4;
-        }
-        if(read_matrix(argv[2], b) == -1){
-            return 5;
-        }
-        output = argv[3];
-    }
+    // // No arguments
+    // if(argv[1] == NULL){
+    //     if(read_matrix("a", a) == -1){
+    //         return 2;
+    //     }
+    //     if(read_matrix("b", b) == -1){
+    //         return 3;
+    //     }
+    //     output = "c";
+    // }
+    // // Custom arrguments
+    // else {
+    //     if(read_matrix(argv[1], a) == -1){
+    //         return 4;
+    //     }
+    //     if(read_matrix(argv[2], b) == -1){
+    //         return 5;
+    //     }
+    //     output = argv[3];
+    // }
     
-    check_not_valid_mult(a, b);
+    // check_not_valid_mult(a, b);
     
-    print_matrix(a);
-    printf("\n");
-    print_matrix(b);
+    // print_matrix(a);
+    // printf("\n");
+    // print_matrix(b);
+
+    output = "c";
+    struct Matrix *c = malloc(sizeof(struct Matrix));
+    c->rows = 4;
+    c->cols = 4;
+    allocate_arr(c);
+    for(int i = 0; i < c->rows; i++){
+        for(int j = 0; j < c->cols; j++){
+            c->arr[i][j] = 5;
+        }
+    }
+
+    write_matrix(0, c);
+    write_matrix(1, c);
+    write_matrix(2, c);
 
     return 0;
 }
